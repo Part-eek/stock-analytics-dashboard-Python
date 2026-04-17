@@ -1,4 +1,7 @@
-const API_BASE = 'http://127.0.0.1:8001/api';
+// Auto-detect API base: use same origin in production, localhost in development
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://127.0.0.1:8001/api'
+    : `${window.location.origin}/api`;
 
 const selectors = {
     company: document.getElementById('company-select'),
