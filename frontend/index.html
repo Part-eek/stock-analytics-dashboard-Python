@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NIFTY 50 Stock Analytics Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.plot.ly/plotly-2.34.0.min.js"></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>⚙️ Dashboard Controls</h2>
+            </div>
+
+            <div class="control-group">
+                <label for="company-select">🏢 Select Company</label>
+                <select id="company-select"></select>
+            </div>
+
+            <div class="control-group">
+                <label for="period-select">📅 Time Period</label>
+                <select id="period-select">
+                    <option value="1mo">1 Month</option>
+                    <option value="3mo">3 Months</option>
+                    <option value="6mo">6 Months</option>
+                    <option value="1y" selected>1 Year</option>
+                    <option value="2y">2 Years</option>
+                    <option value="5y">5 Years</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <p class="control-label">📊 Charts to Display</p>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="show-price" checked /> Price Trend</label>
+                    <label><input type="checkbox" id="show-candle" checked /> Candlestick Chart</label>
+                    <label><input type="checkbox" id="show-volume" checked /> Volume Chart</label>
+                    <label><input type="checkbox" id="show-bollinger" /> Bollinger Bands</label>
+                    <label><input type="checkbox" id="show-returns" /> Returns Distribution</label>
+                    <label><input type="checkbox" id="show-rsi" /> RSI Indicator</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="compare-select">🔄 Compare Companies</label>
+                <select id="compare-select" multiple size="6"></select>
+                <p class="helper-text">Select up to 5 companies for comparison.</p>
+            </div>
+
+            <div class="control-group sidebar-footer">
+                <button id="refresh-button" class="primary-button">Refresh Dashboard</button>
+                <p class="small-note">📌 Data sourced from Yahoo Finance</p>
+                <p class="small-note">🔄 Auto-refresh every 5 minutes</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="dashboard-header">
+                <div>
+                    <h1>📈 NIFTY 50 Stock Analytics Dashboard</h1>
+                    <p>Real-time trend visualization and data analytics of India's top 50 companies</p>
+                </div>
+            </section>
+
+            <section class="status-bar">
+                <div id="status-message">Loading dashboard...</div>
+                <div id="last-updated"></div>
+            </section>
+
+            <details class="panel" id="cleaning-panel">
+                <summary>🧹 Data Cleaning & Preprocessing Report</summary>
+                <div class="metric-grid" id="cleaning-summary-grid"></div>
+                <div class="markdown-block" id="cleaning-details"></div>
+            </details>
+
+            <section class="metrics-section">
+                <div class="section-header">📊 Key Metrics & Insights</div>
+                <div class="metrics-grid" id="metrics-row-1"></div>
+                <div class="metrics-grid" id="metrics-row-2"></div>
+            </section>
+
+            <section class="insights-section">
+                <div class="insight-box" id="insight-left"></div>
+                <div class="insight-box" id="insight-right"></div>
+            </section>
+
+            <section class="insight-box prediction-box" id="prediction-box"></section>
+
+            <section class="visualization-section">
+                <div class="section-header">📈 Visualizations</div>
+                <div class="chart-card" id="price-card">
+                    <h3>📈 Price Trend with Moving Averages</h3>
+                    <div id="price-trend"></div>
+                </div>
+                <div class="chart-card" id="candlestick-card">
+                    <h3>🕯️ Candlestick Chart (OHLC)</h3>
+                    <div id="candlestick"></div>
+                </div>
+                <div class="chart-card" id="volume-card">
+                    <h3>📊 Trading Volume</h3>
+                    <div id="volume-chart"></div>
+                </div>
+                <div class="chart-card" id="bollinger-card">
+                    <h3>📈 Bollinger Bands (Volatility)</h3>
+                    <div id="bollinger-chart"></div>
+                </div>
+                <div class="chart-card" id="returns-card">
+                    <h3>📊 Daily Returns Distribution</h3>
+                    <div id="returns-chart"></div>
+                </div>
+                <div class="chart-card" id="rsi-card">
+                    <h3>📈 RSI (Relative Strength Index)</h3>
+                    <div id="rsi-chart"></div>
+                </div>
+            </section>
+
+            <section class="comparison-section">
+                <div class="section-header">🔄 Company Comparison</div>
+                <div id="comparison-chart"></div>
+                <div id="comparison-volume-chart"></div>
+                <div id="comparison-table"></div>
+            </section>
+
+            <section class="table-section">
+                <div class="section-header">📋 Summary Statistics</div>
+                <div id="summary-table"></div>
+            </section>
+
+            <details class="panel" id="raw-data-panel">
+                <summary>📄 View Raw Data (After Cleaning)</summary>
+                <div id="raw-data-table"></div>
+            </details>
+
+            <footer class="footer-note">
+                <p><strong>📈 NIFTY 50 Stock Analytics Dashboard</strong></p>
+                <p>Demonstrating the Data Analytics Lifecycle: Data Collection → Cleaning → Transformation → Visualization → Insights</p>
+                <p style="font-size:0.85rem;">Built with HTML • CSS • JavaScript • FastAPI • yfinance • Pandas • NumPy • Plotly</p>
+            </footer>
+        </main>
+    </div>
+
+    <div id="loading-overlay" class="hidden">
+        <div class="loader"></div>
+    </div>
+
+    <script src="js/charts.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
